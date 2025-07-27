@@ -1,5 +1,5 @@
 ﻿# offensiveJokesMCP
-# 🤬 Offensive Joke Generator
+# 😜 Offensive Joke Generator
 
 A dark-humored Streamlit app that uses Google Gemini and joke APIs to deliver sarcastic, offensive, and vulgar jokes based on your chosen topic — with multilingual support!
 
