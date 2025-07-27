@@ -1,0 +1,5 @@
+streamlit
+google.generativeai
+requests
+random
+urllib.parse 
