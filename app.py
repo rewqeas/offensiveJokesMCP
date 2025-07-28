@@ -69,12 +69,28 @@ lang_map = {
 
 def handle_tool_call(topic, target_lang_code="en"):
     try:
+      
         joke = search_joke_by_topic(topic)
 
-        if not joke:
-            joke = get_random_joke()
+        # if not joke:
+        #     joke = get_random_joke()
+
+         # Detect placeholder or known "not found" messages
+        if (
+            joke is None or 
+            not joke.strip() or 
+            "no jokes" in joke.lower() or 
+            "not found" in joke.lower()
+        ):
+
+            raise ValueError("Joke search failed or returned no joke.")
+
 
         translated = translate_text(joke, target_lang_code)
+
+        if not translated or not translated.strip():
+            raise ValueError("Translation failed.")
+
         st.success("searching🔍🔍")
         return joke, translated
         
@@ -82,7 +98,14 @@ def handle_tool_call(topic, target_lang_code="en"):
     except Exception as e:
         try:
             fallback = get_random_joke()
+            st.write("Searching failed. Generating random joke🔍🔍")
+
             translated = translate_text(fallback, target_lang_code)
+
+            if not translated or not translated.strip():
+                raise ValueError("Translation failed.")
+
+
             return fallback, translated
         
         except Exception as inner_e:
